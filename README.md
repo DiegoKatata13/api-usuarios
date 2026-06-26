@@ -131,4 +131,4 @@ api-usuarios/
 
 ## 👨‍💻 Autor
 
-**Diego** — em aprendizado pela plataforma Alura 🚀
+**Diego** 🚀
