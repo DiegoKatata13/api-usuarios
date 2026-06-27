@@ -109,19 +109,19 @@ npm test
 api-usuarios/
 ├── src/
 │   ├── config/
-│   │   └── database.js       # Conexão com MongoDB
+│   │   └── database.js              # Conexão com MongoDB
 │   ├── controllers/
-│   │   ├── authController.js  # Registrar e login
-│   │   └── usuarioController.js # Perfil do usuário
+│   │   ├── authController.js        # Registrar e login
+│   │   └── usuarioController.js     # Perfil do usuário
 │   ├── middlewares/
-│   │   └── autenticar.js     # Validação do token JWT
+│   │   └── autenticar.js            # Validação do token JWT
 │   ├── models/
-│   │   └── Usuario.js        # Schema do MongoDB
+│   │   └── Usuario.js               # Schema do MongoDB
 │   ├── routes/
 │   │   ├── authRoutes.js
 │   │   └── usuarioRoutes.js
-│   ├── app.js                # Configuração do Express
-│   └── server.js             # Ponto de entrada
+│   ├── app.js                       # Configuração do Express
+│   └── server.js                    # Ponto de entrada
 ├── tests/
 │   └── api.test.js
 ├── .env.example
