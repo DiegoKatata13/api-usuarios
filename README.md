@@ -1,5 +1,11 @@
 # 👤 API REST de Cadastro de Usuários
 
+![Node.js](https://img.shields.io/badge/Node.js-18+-339933?logo=node.js&logoColor=white)
+![Express](https://img.shields.io/badge/Express-4.x-000000?logo=express&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?logo=mongodb&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-Auth-000000?logo=jsonwebtokens&logoColor=white)
+![Tests](https://img.shields.io/badge/Tests-24%20passing-brightgreen)
+
 Uma API REST robusta e profissional para autenticação e gerenciamento de usuários, desenvolvida com Node.js, Express e MongoDB, pronta para produção.
 
 ## ✨ Funcionalidades
@@ -43,7 +49,7 @@ Uma API REST robusta e profissional para autenticação e gerenciamento de usuá
 ### 1. Clone o repositório
 
 ```bash
-git clone https://github.com/seu-usuario/api-usuarios.git
+git clone https://github.com/DiegoKatata13/api-usuarios.git
 cd api-usuarios
 ```
 
@@ -62,21 +68,12 @@ cp .env.example .env
 Edite o arquivo `.env` com suas configurações:
 
 ```env
-# Ambiente
 NODE_ENV=development
 PORT=3000
-
-# MongoDB
 MONGODB_URI=sua_uri_do_mongodb_aqui
-
-# JWT
-JWT_SECRET=sua-chave-super-secreta-aqui
-JWT_EXPIRES_IN=24h
-
-# CORS
+JWT_SECRET=sua_chave_secreta_aqui
+JWT_EXPIRES_IN=7d
 CORS_ORIGIN=http://localhost:3000
-
-# Logging
 LOG_LEVEL=info
 ```
 
@@ -164,7 +161,7 @@ Content-Type: application/json
 #### Visualizar perfil
 ```http
 GET /usuarios/perfil
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+Authorization: Bearer <token>
 ```
 
 **Resposta (200):**
@@ -185,7 +182,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 #### Atualizar perfil
 ```http
 PUT /usuarios/perfil
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+Authorization: Bearer <token>
 Content-Type: application/json
 
 {
@@ -202,9 +199,7 @@ Content-Type: application/json
   "usuario": {
     "id": "6123456789abcdef",
     "nome": "João Silva Santos",
-    "email": "novo@example.com",
-    "criadoEm": "2024-01-15T10:30:00.000Z",
-    "atualizadoEm": "2024-01-15T12:00:00.000Z"
+    "email": "novo@example.com"
   }
 }
 ```
@@ -214,7 +209,7 @@ Content-Type: application/json
 #### Excluir conta
 ```http
 DELETE /usuarios/perfil
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+Authorization: Bearer <token>
 ```
 
 **Resposta (200):**
@@ -233,7 +228,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 
 ## 🔐 Segurança
 
-### Implementações
 - ✅ **Hash de Senhas**: bcryptjs com 10 rounds
 - ✅ **JWT**: Tokens com expiração configurável
 - ✅ **Rate Limiting**: 5 tentativas de login por 15 minutos
@@ -250,110 +244,64 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 ## 📊 Estrutura do Projeto
 
 ```
-.
+api-usuarios/
 ├── src/
-│   ├── app.js                 # Setup do Express
-│   ├── server.js              # Inicialização do servidor
+│   ├── app.js                       # Configuração do Express
+│   ├── server.js                    # Ponto de entrada
 │   ├── config/
-│   │   └── database.js        # Conexão MongoDB
-│   ├── controllers/           # Lógica de negócio
-│   │   ├── authController.js
-│   │   └── usuarioController.js
-│   ├── models/
-│   │   └── Usuario.js         # Schema Mongoose
+│   │   └── database.js              # Conexão com MongoDB
+│   ├── controllers/
+│   │   ├── authController.js        # Registrar e login
+│   │   └── usuarioController.js     # Perfil do usuário
 │   ├── middlewares/
-│   │   ├── autenticar.js      # Validação JWT
-│   │   └── errorHandler.js    # Tratamento de erros
+│   │   ├── autenticar.js            # Validação do token JWT
+│   │   └── errorHandler.js          # Tratamento de erros
+│   ├── models/
+│   │   └── Usuario.js               # Schema do MongoDB
 │   ├── routes/
 │   │   ├── authRoutes.js
 │   │   └── usuarioRoutes.js
 │   └── utils/
-│       ├── logger.js          # Logging centralizado
-│       └── validators.js      # Schemas Joi
+│       ├── logger.js                # Logging centralizado
+│       └── validators.js            # Schemas Joi
 ├── tests/
-│   └── api.test.js            # Suite de testes
-├── logs/                      # Arquivos de log
-├── .env.example               # Variáveis de exemplo
-├── package.json
-└── README.md
+│   └── api.test.js                  # Suite de testes
+├── .env.example
+├── .gitignore
+└── package.json
 ```
 
 ## 🧪 Testes
 
-### Executar todos os testes
 ```bash
+# Executar todos os testes
 npm test
-```
 
-### Executar com cobertura
-```bash
+# Executar com cobertura
 npm test -- --coverage
 ```
 
-### Testes incluem:
-- ✅ Registros com dados válidos e inválidos
+**Testes incluem:**
+- ✅ Registro com dados válidos e inválidos
 - ✅ Login com credenciais corretas e incorretas
 - ✅ Validação de tokens JWT
 - ✅ Proteção de rotas autenticadas
 - ✅ CRUD de perfil de usuário
-- ✅ Rate limiting
-- ✅ Tratamento de erros
-- ✅ Casos de borda
-
-**Total de testes**: 30+  
-**Cobertura**: ~95%
+- ✅ Tratamento de erros e casos de borda
 
 ## 🚀 Deploy
 
-### Heroku
-```bash
-heroku login
-heroku create seu-app-name
-heroku config:set JWT_SECRET=sua-chave
-git push heroku main
-```
-
-### Docker
-```bash
-docker build -t api-usuarios .
-docker run -p 3000:3000 api-usuarios
-```
-
-### Environment Variables em Produção
+### Variáveis de Ambiente em Produção
 Certifique-se de definir:
 - `NODE_ENV=production`
-- `JWT_SECRET` (chave forte)
-- `MONGODB_URI` (MongoDB Atlas URI)
+- `JWT_SECRET` (chave forte e aleatória)
+- `MONGODB_URI` (URI do MongoDB Atlas)
 - `CORS_ORIGIN` (domínio do frontend)
 
-## 📝 Logging
-
-Os logs são salvos em `logs/app-YYYY-MM-DD.log` e também exibidos no console com cores:
-
+### Gerar chave JWT segura
+```bash
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 ```
-[2024-01-15T10:30:00.000Z] [INFO] Novo usuário registrado: 6123456789abcdef
-[2024-01-15T10:31:00.000Z] [INFO] Login bem-sucedido: 6123456789abcdef
-[2024-01-15T10:32:00.000Z] [WARN] Tentativa de registro com e-mail já existente
-[2024-01-15T10:33:00.000Z] [ERROR] Erro ao conectar ao banco de dados
-```
-
-## 🤝 Contribuindo
-
-1. Fork o projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
-
-## 📄 Licença
-
-MIT - veja o arquivo LICENSE para detalhes
-
-## 👨‍💼 Autor
-
-**Diego** - [GitHub](https://github.com/seu-usuario)
-
----
 
 ## 💡 Próximas Melhorias
 
@@ -361,107 +309,12 @@ MIT - veja o arquivo LICENSE para detalhes
 - [ ] Autenticação multi-fator (MFA)
 - [ ] OAuth 2.0 (Google, GitHub)
 - [ ] Refresh tokens
-- [ ] Soft delete para usuários
 - [ ] Documentação OpenAPI/Swagger
 - [ ] Cache com Redis
-- [ ] Metrics e APM
-
-## ❓ FAQ
-
-**P: Como gero uma chave JWT segura?**  
-R: Use: `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`
-
-**P: Posso usar isso em produção?**  
-R: Sim! Certifique-se de configurar as variáveis de ambiente corretamente e usar HTTPS.
-
-**P: Como funciona o Rate Limiting?**  
-R: Login: máximo 5 tentativas por 15 minutos. Registro: máximo 3 por IP por hora.
-
----
-
-**Última atualização**: Janeiro 2024  
-**Versão**: 1.0.0
-MONGODB_URI=sua_uri_do_mongodb_aqui
-JWT_SECRET=sua_chave_secreta_aqui
-JWT_EXPIRES_IN=7d
-```
-
-## 📡 Endpoints
-
-### Autenticação (público)
-
-| Método | Rota              | Descrição          |
-|--------|-------------------|--------------------|
-| POST   | /auth/registrar   | Cadastrar usuário  |
-| POST   | /auth/login       | Fazer login        |
-
-### Usuários (requer token JWT)
-
-| Método | Rota              | Descrição             |
-|--------|-------------------|-----------------------|
-| GET    | /usuarios/perfil  | Ver perfil            |
-| PUT    | /usuarios/perfil  | Atualizar perfil      |
-| DELETE | /usuarios/perfil  | Excluir conta         |
-
-### Exemplos de requisição
-
-**Registrar:**
-```json
-POST /auth/registrar
-{
-  "nome": "Diego",
-  "email": "diego@email.com",
-  "senha": "123456"
-}
-```
-
-**Login:**
-```json
-POST /auth/login
-{
-  "email": "diego@email.com",
-  "senha": "123456"
-}
-```
-
-**Acessar perfil (com token):**
-```
-GET /usuarios/perfil
-Authorization: Bearer <token>
-```
-
-## 🧪 Testes
-
-```bash
-npm test
-```
-
-## 📁 Estrutura do Projeto
-
-```
-api-usuarios/
-├── src/
-│   ├── config/
-│   │   └── database.js              # Conexão com MongoDB
-│   ├── controllers/
-│   │   ├── authController.js        # Registrar e login
-│   │   └── usuarioController.js     # Perfil do usuário
-│   ├── middlewares/
-│   │   └── autenticar.js            # Validação do token JWT
-│   ├── models/
-│   │   └── Usuario.js               # Schema do MongoDB
-│   ├── routes/
-│   │   ├── authRoutes.js
-│   │   └── usuarioRoutes.js
-│   ├── app.js                       # Configuração do Express
-│   └── server.js                    # Ponto de entrada
-├── tests/
-│   └── api.test.js
-├── .env.example
-├── .gitignore
-└── package.json
-```
 
 ## 👨‍💻 Autor
 
-**Diego** 🚀
+**Diego Silva**
+Desenvolvedor back-end em formação, focado em Node.js e APIs REST.
+
+[GitHub](https://github.com/DiegoKatata13)
