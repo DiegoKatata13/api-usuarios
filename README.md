@@ -67,7 +67,7 @@ NODE_ENV=development
 PORT=3000
 
 # MongoDB
-MONGODB_URI=mongodb://localhost:27017/api-usuarios
+MONGODB_URI=sua_uri_do_mongodb_aqui
 
 # JWT
 JWT_SECRET=sua-chave-super-secreta-aqui
