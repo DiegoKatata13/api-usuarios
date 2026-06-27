@@ -62,7 +62,8 @@ const login = async (req, res) => {
         email: usuario.email,
       },
     });
-  } catch {
+  } catch (erro) {
+    console.error('Erro no login:', erro);
     return res.status(500).json({ erro: 'Erro interno do servidor' });
   }
 };
