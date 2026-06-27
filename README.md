@@ -48,7 +48,7 @@ Crie um arquivo `.env` baseado no `.env.example`:
 
 ```env
 PORT=3000
-MONGODB_URI=mongodb://localhost:27017/api-usuarios
+MONGODB_URI=sua_uri_do_mongodb_aqui
 JWT_SECRET=sua_chave_secreta_aqui
 JWT_EXPIRES_IN=7d
 ```
